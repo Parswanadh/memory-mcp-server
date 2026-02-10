@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "memory": {
+      "command": "node",
+      "args": ["D:\\projects\\new\\memory-mcp-server\\build\\index.js"],
+      "env": {
+        "VECTOR_STORE_TYPE": "memory",
+        "EMBEDDING_PROVIDER": "openai",
+        "OPENAI_API_KEY": "YOUR_OPENAI_API_KEY_HERE",
+        "WORKING_MEMORY_TTL": "1800000",
+        "SHORT_TERM_MEMORY_TTL": "604800000",
+        "LONG_TERM_MEMORY_TTL": "31536000000"
+      }
+    }
+  }
+}

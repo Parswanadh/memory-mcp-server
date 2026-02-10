@@ -1,0 +1,67 @@
+{
+  "name": "@anthropic-ai/memory-mcp-server",
+  "version": "1.0.0",
+  "description": "Persistent Hierarchical Memory MCP Server - Multi-layer memory system with semantic search for AI agents",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": {
+    "memory-mcp-server": "build/index.js"
+  },
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "memory",
+    "vector-store",
+    "weaviate",
+    "pinecone",
+    "ai",
+    "agent"
+  ],
+  "author": "Anthropic",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@pinecone-database/pinecone": "^5.1.0",
+    "weaviate-ts-client": "^2.0.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@types/node": "^22.10.5",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "@vitest/coverage-v8": "^3.0.5",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0",
+    "vitest": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthropics/memory-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthropics/memory-mcp-server/issues"
+  },
+  "homepage": "https://github.com/anthropics/memory-mcp-server#readme"
+}

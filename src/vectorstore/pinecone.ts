@@ -1,10 +1,14 @@
 /**
  * Pinecone Vector Store Implementation
+ *
+ * SECURITY NOTE: Error messages are sanitized to prevent exposure of
+ * sensitive credentials. Full error details are logged internally.
  */
 
 import { Pinecone } from '@pinecone-database/pinecone';
 import { IVectorStore, Memory, MemorySearchResult, MemoryLayer, MemorySource } from '../types.js';
 import { config } from '../config.js';
+import { createSafeErrorMessage } from '../security.js';
 
 const NAMESPACE = 'memory-mcp';
 
@@ -36,7 +40,9 @@ export class PineconeVectorStore implements IVectorStore {
       await this.client.describeIndex(this.indexName);
       this.initialized = true;
     } catch (error) {
-      throw new Error(`Failed to initialize Pinecone: ${error}`);
+      // Log full error internally but sanitize for exposure
+      console.error('[Pinecone] Initialization error:', error);
+      throw new Error(createSafeErrorMessage('Failed to initialize Pinecone', error));
     }
   }
 

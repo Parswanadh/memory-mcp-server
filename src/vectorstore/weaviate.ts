@@ -1,10 +1,14 @@
 /**
  * Weaviate Vector Store Implementation
+ *
+ * SECURITY NOTE: Error messages are sanitized to prevent exposure of
+ * sensitive credentials. Full error details are logged internally.
  */
 
 import weaviate, { WeaviateClient } from 'weaviate-ts-client';
 import { IVectorStore, Memory, MemorySearchResult, MemoryLayer, MemorySource } from '../types.js';
 import { config } from '../config.js';
+import { createSafeErrorMessage } from '../security.js';
 
 const CLASS_NAME = 'Memory';
 
@@ -121,7 +125,9 @@ export class WeaviateVectorStore implements IVectorStore {
 
       this.initialized = true;
     } catch (error) {
-      throw new Error(`Failed to initialize Weaviate: ${error}`);
+      // Log full error internally but sanitize for exposure
+      console.error('[Weaviate] Initialization error:', error);
+      throw new Error(createSafeErrorMessage('Failed to initialize Weaviate', error));
     }
   }
 

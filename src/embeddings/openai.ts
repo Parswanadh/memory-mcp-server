@@ -1,9 +1,14 @@
 /**
  * OpenAI Embedding Provider Implementation
+ *
+ * SECURITY NOTE: This implementation follows the principle of not exposing
+ * sensitive data (API keys) in error messages. Full error details are logged
+ * internally for debugging, but only sanitized information is exposed to users.
  */
 
 import { IEmbeddingProvider } from '../types.js';
 import { config } from '../config.js';
+import { sanitizeError } from '../security.js';
 
 export class OpenAIEmbeddingProvider implements IEmbeddingProvider {
   private dimensions: number;
@@ -37,7 +42,9 @@ export class OpenAIEmbeddingProvider implements IEmbeddingProvider {
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`OpenAI API error: ${response.status} - ${error}`);
+      // Log full error internally but sanitize for exposure
+      console.error('[OpenAI] API Error:', error);
+      throw new Error(`OpenAI API error: ${response.status}`);
     }
 
     const data = (await response.json()) as { data: Array<{ embedding: number[] }> };
@@ -72,7 +79,9 @@ export class OpenAIEmbeddingProvider implements IEmbeddingProvider {
 
       if (!response.ok) {
         const error = await response.text();
-        throw new Error(`OpenAI API error: ${response.status} - ${error}`);
+        // Log full error internally but sanitize for exposure
+        console.error('[OpenAI] API Error:', error);
+        throw new Error(`OpenAI API error: ${response.status}`);
       }
 
       const data = (await response.json()) as { data: Array<{ embedding: number[] }> };
